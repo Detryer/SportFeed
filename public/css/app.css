@@ -1,0 +1,27 @@
+.match div {
+  line-height: 25px !important;
+}
+.last_updated {
+  display: flex;
+  flex-direction: column;
+}
+.last_updated div {
+  height: 15px;
+  line-height: 15px;
+  font-size: 12px;
+  text-align: right;
+}
+.list-group {
+  width: 45% !important;
+  padding: 0 !important;
+}
+
+.no-padding-container {
+  margin: 0 !important;
+}
+
+.list-group-item {
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  border-radius: 0 !important;
+}
