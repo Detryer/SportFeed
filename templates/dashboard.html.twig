@@ -1,6 +1,14 @@
 {% extends "base.html.twig" %}
 
-{% block title %}{{ section|capitalize }}{% endblock %}
+{% block title %}
+    {% if section == 'nfl' %}
+        Football
+    {% elseif section == 'nba' %}
+        Basketball
+    {% else %}
+        Hockey
+    {% endif %}
+{% endblock %}
 {% block body %}
     {% if liveGames.scoreboard.lastUpdatedOn is defined and liveGames.scoreboard.lastUpdatedOn is not empty %}
         {% set lastUpdatedLive = liveGames.scoreboard.lastUpdatedOn|date('d.m.Y G:i') %}
@@ -12,8 +20,34 @@
     {% else %}
         {% set lastUpdatedUpcoming = 'Unknown' %}
     {% endif %}
-    <div class="container justify-content-md-center">
-        <div class="row mt-5 d-flex justify-content-between no-padding-container">
+    <div class="row mt-5 d-flex justify-content-between no-padding-container">
+        <ul class="list-group">
+            <li class="list-group-item h5 bg-primary text-white">
+                <div class="row">
+                    <div class="col-8">Upcoming games</div>
+                    <div class="col-4 last_updated">
+                        <div>Last update:</div>
+                        <div>{{ lastUpdatedUpcoming }}</div>
+                    </div>
+                </div>
+            </li>
+            {% if upcomingGames.fullgameschedule.gameentry is defined and upcomingGames.fullgameschedule.gameentry is not empty %}
+                {% for match in upcomingGames.fullgameschedule.gameentry %}
+                    {% set gameStartTime = match.date ~ ' ' ~ match.time %}
+                    <li class="list-group-item">
+                        <div class="row match">
+                            <div class="col-3 text-center">{{ match.homeTeam.Name }}</div>
+                            <div class="col-1 text-center">-</div>
+                            <div class="col-3 text-center">{{ match.awayTeam.Name }}</div>
+                            <div class="col-5 text-center">{{ gameStartTime|date('d.m.Y G:i') }}</div>
+                        </div>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li class="list-group-item">No games found</li>
+            {% endif %}
+        </ul>
+        {% if authenticated %}
             <ul class="list-group">
                 <li class="list-group-item h5 bg-info text-white">
                     <div class="row">
@@ -51,32 +85,6 @@
                     <li class="list-group-item">No games found</li>
                 {% endif %}
             </ul>
-            <ul class="list-group">
-                <li class="list-group-item h5 bg-primary text-white">
-                    <div class="row">
-                        <div class="col-8">Upcoming games</div>
-                        <div class="col-4 last_updated">
-                            <div>Last update:</div>
-                            <div>{{ lastUpdatedUpcoming }}</div>
-                        </div>
-                    </div>
-                </li>
-                {% if upcomingGames.fullgameschedule.gameentry is defined and upcomingGames.fullgameschedule.gameentry is not empty %}
-                    {% for match in upcomingGames.fullgameschedule.gameentry %}
-                        {% set gameStartTime = match.date ~ ' ' ~ match.time %}
-                        <li class="list-group-item">
-                            <div class="row match">
-                                <div class="col-3 text-center">{{ match.homeTeam.Name }}</div>
-                                <div class="col-1 text-center">-</div>
-                                <div class="col-3 text-center">{{ match.awayTeam.Name }}</div>
-                                <div class="col-5 text-center">{{ gameStartTime|date('d.m.Y G:i') }}</div>
-                            </div>
-                        </li>
-                    {% endfor %}
-                {% else %}
-                    <li class="list-group-item">No games found</li>
-                {% endif %}
-            </ul>
-        </div>
+        {% endif %}
     </div>
 {% endblock %}

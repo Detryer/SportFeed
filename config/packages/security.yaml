@@ -1,16 +1,43 @@
 security:
-    # https://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+        Symfony\Component\Security\Core\User\User: plaintext
     providers:
-        in_memory: { memory: ~ }
+        chain_provider:
+            chain:
+                providers: [in_memory, db_provider]
+        in_memory:
+            memory:
+                users:
+                    User:
+                        password: user
+                        roles: 'ROLE_USER'
+                    Admin:
+                        password: admin
+                        roles: 'ROLE_ADMIN'
+        db_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: ~
+            provider: chain_provider
             form_login:
                 login_path: login
                 check_path: login
+            logout:
+                path: /logout
+                target: /
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
 
             # activate different ways to authenticate
 

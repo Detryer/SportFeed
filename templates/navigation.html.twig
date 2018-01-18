@@ -1,5 +1,4 @@
-{% block navigation %}
-    {% set auth = false %}
+{% block body %}
     {% set currentPath = path(app.request.attributes.get('_route'),
     app.request.attributes.get('_route_params')) %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top col-xs-4">
@@ -7,25 +6,28 @@
             <a class="navbar-brand" href="#">Sport feed</a>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="/football" class="nav-link {{ currentPath == '/football' ? 'active' : '' }}">Football</a>
+                    <a href="/boards/nfl" class="nav-link {{ currentPath == '/boards/nfl' ? 'active' : '' }}">Football</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/basketball"
-                       class="nav-link {{ currentPath == '/basketball' ? 'active' : '' }}">Basketball</a>
+                    <a href="/boards/nba"
+                       class="nav-link {{ currentPath == '/boards/nba' ? 'active' : '' }}">Basketball</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/hockey" class="nav-link {{ currentPath == '/hockey' ? 'active' : '' }}">Hockey</a>
+                    <a href="/boards/nhl" class="nav-link {{ currentPath == '/boards/nhl' ? 'active' : '' }}">Hockey</a>
                 </li>
-                {% if auth %}
-                    <li class="ml-4 nav-item">
-                        <a class="btn btn-light" href="#" id="logout">Logout</a>
+                {% if authenticated %}
+                    <li class="ml-4 nav-item btn border-success text-success">
+                        {{ app.user.username }}
+                    </li>
+                    <li class="ml-2 nav-item">
+                        <a class="btn btn-light" href="/logout" id="logout">Logout</a>
                     </li>
                 {% else %}
                     <li class="ml-4 nav-item">
-                        <button class="btn btn-outline-info" id="login">Login</button>
+                        <a class="btn btn-outline-info" href="/login">Login</a>
                     </li>
                     <li class="ml-2 nav-item">
-                        <button class="btn btn-light" id="register">Register</button>
+                        <a class="btn btn-light" href="/register">Register</a>
                     </li>
                 {% endif %}
             </ul>

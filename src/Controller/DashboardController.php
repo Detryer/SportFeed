@@ -7,23 +7,23 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class DashboardController extends Controller {
 
-  const AVAILABLE_TYPES = ['football', 'basketball', 'hockey'];
+  const AVAILABLE_TYPES = ['nfl', 'nba', 'nhl'];
 
   // MySportsFeeds API credentials:
-  const MSF_API_USERNAME = 'vodimge';
+  const MSF_API_USERNAME = 'hiqo';
 
-  const MSF_API_PASSWORD = 'Vadim2303391';
+  const MSF_API_PASSWORD = '2303391';
 
   /**
-   * @Route("/")
+   * @Route("/", name="dashboard")
    * @Route("/boards/{type}")
    * @param string $type
    *
    * @return \Symfony\Component\HttpFoundation\Response
    */
-  public function index($type = null) {
+  public function index($type = NULL) {
     if (!in_array($type, self::AVAILABLE_TYPES)) {
-      return $this->redirect('/boards/football');
+      return $this->redirect('/boards/nfl');
     }
     $section = empty($type) ? 'football' : $type;
     return $this->listGames($section);
@@ -31,6 +31,7 @@ class DashboardController extends Controller {
 
   /**
    * Render games view
+   *
    * @param $section
    *
    * @return \Symfony\Component\HttpFoundation\Response
@@ -43,6 +44,7 @@ class DashboardController extends Controller {
 
   /**
    * Prepare games data for view
+   *
    * @param string $game
    * @param string $type
    *
@@ -55,32 +57,19 @@ class DashboardController extends Controller {
 
   /**
    * Get games data by API call
+   *
    * @param $game
    * @param $type
    *
    * @return mixed
    */
   private function getAPIData($game, $type) {
-    switch ($game) {
-      case 'basketball':
-        $league = 'nba';
-        break;
-      case 'hockey':
-        $league = 'nhl';
-        break;
-      case 'football':
-      default:
-        $league = 'nfl';
-        break;
-    }
-
-//    $currentDate = date('Ymd', strtotime('-4 day'));
     $currentDate = date('Ymd');
     if ($type === 'live') {
-      $url = "http://api.mysportsfeeds.com/v1.1/pull/{$league}/current/scoreboard.json?fordate={$currentDate}?status=in-progress";
+      $url = "http://api.mysportsfeeds.com/v1.1/pull/{$game}/current/scoreboard.json?fordate={$currentDate}?status=in-progress";
     }
     else {
-      $url = "http://api.mysportsfeeds.com/v1.1/pull/{$league}/current/full_game_schedule.json?status=unplayed";
+      $url = "http://api.mysportsfeeds.com/v1.1/pull/{$game}/current/full_game_schedule.json?status=unplayed";
     }
 
     $ch = curl_init();
