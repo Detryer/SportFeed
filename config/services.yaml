@@ -1,7 +1,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-
+    facebook_client_id: <replace-with-your-facebook-client-id>
+    facebook_secret: <replace-with-your-facebook-secret>
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -24,3 +25,14 @@ services:
         tags: ['controller.service_arguments']
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    app.user.oauth_provider:
+        class: App\Entity\FOSUBUserProvider
+        arguments:
+            user_manager: "@fos_user.user_manager"
+            user_response:
+                facebook: facebook_id
+    app.user.oauth_provider:
+        class: HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider
+        arguments:
+            - '@user.user_manager'
+            - ['pass properties as array']

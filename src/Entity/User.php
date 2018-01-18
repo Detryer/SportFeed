@@ -48,6 +48,12 @@ class User implements UserInterface {
    */
   private $password;
 
+  /** @ORM\Column(name="facebook_id", type="string", length=255, nullable=true) */
+  protected $facebook_id;
+
+  /** @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true) */
+  protected $facebook_access_token;
+
   public function getEmail() {
     return $this->email;
   }
@@ -78,6 +84,22 @@ class User implements UserInterface {
 
   public function setPassword($password) {
     $this->password = $password;
+  }
+
+  public function getFacebookId() {
+    return $this->facebook_id;
+  }
+
+  public function setFacebookId($facebook_id) {
+    $this->facebook_id = $facebook_id;
+  }
+
+  public function getFacebookAccessToken() {
+    return $this->facebook_access_token;
+  }
+
+  public function setFacebookAccessToken($facebook_access_token) {
+    $this->facebook_access_token = $facebook_access_token;
   }
 
   public function getSalt() {
