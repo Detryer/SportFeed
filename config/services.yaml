@@ -25,14 +25,9 @@ services:
         tags: ['controller.service_arguments']
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    app.user.oauth_provider:
+    app.fos_user.oauth_provider:
         class: App\Entity\FOSUBUserProvider
         arguments:
-            user_manager: "@fos_user.user_manager"
-            user_response:
-                facebook: facebook_id
-    app.user.oauth_provider:
-        class: HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider
-        arguments:
-            - '@user.user_manager'
-            - ['pass properties as array']
+            - '@fos_user.user_manager'
+            - { facebook: facebookId, google: googleId }
+            - '@doctrine'

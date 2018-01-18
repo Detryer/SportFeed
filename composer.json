@@ -4,6 +4,7 @@
     "require": {
         "php": "^7.0.8",
         "ext-iconv": "*",
+        "friendsofsymfony/user-bundle": "~2.0",
         "google/apiclient": "2.0",
         "hwi/oauth-bundle": "^0.6.0",
         "php-http/guzzle6-adapter": "^1.1",

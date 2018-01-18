@@ -1,12 +1,11 @@
 security:
     encoders:
-        App\Entity\User:
-            algorithm: bcrypt
+        FOS\UserBundle\Model\UserInterface: bcrypt
         Symfony\Component\Security\Core\User\User: plaintext
     providers:
         chain_provider:
             chain:
-                providers: [in_memory, db_provider]
+                providers: [in_memory, fos_userbundle]
         in_memory:
             memory:
                 users:
@@ -16,10 +15,8 @@ security:
                     Admin:
                         password: admin
                         roles: 'ROLE_ADMIN'
-        db_provider:
-            entity:
-                class: App\Entity\User
-                property: username
+        fos_userbundle:
+            id: fos_user.user_provider.username
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -36,15 +33,14 @@ security:
             logout:
                 path: /logout
                 target: /
-        oauth:
-            anonymous: ~
-            provider: chain_provider
-#            resource_owners:
-#                facebook: "/login/check-facebook"
-#                login_path: /login
-#                use_forward: false
-#                failure_path: /login
-#                oauth_user_provider:
-#                    service: app.user.oauth_provider
+            oauth:
+                resource_owners:
+                    facebook:           "/secured/login_facebook"
+                    google:           "/secured/login_google"
+                login_path:        fos_user_security_login
+                failure_path:      fos_user_security_login
+
+                oauth_user_provider:
+                    service: app.fos_user.oauth_provider
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
