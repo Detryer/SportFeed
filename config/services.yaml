@@ -1,8 +1,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    facebook_client_id: <replace-with-your-facebook-client-id>
-    facebook_secret: <replace-with-your-facebook-secret>
+    facebook_client_id: 2076571935898183
+    facebook_secret: 8b2be8a7b02fcc4812fb2fdfb7628fe5
+    mailer_user: test@test.ru
 services:
     # default configuration for services in *this* file
     _defaults:

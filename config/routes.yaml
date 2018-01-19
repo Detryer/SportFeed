@@ -13,14 +13,5 @@ hwi_oauth_login:
     resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
     prefix:   /login
 
-#github_login:
-#    path: /connect/check-github
-
 facebook_login:
-    path: /connect/check-facebook
-
-#googleplus_login:
-#    path: /connect/check-googleplus
-
-#stackexchange_login:
-#    path: /connect/check-stackexchange
+    path: /login/check-facebook

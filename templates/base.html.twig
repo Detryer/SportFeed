@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Dashboard{% endblock %}</title>
+    {% block favicon %}
+        <link rel="shortcut icon" href="football.ico" />
+    {% endblock %}
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap-social.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap/font-awesome.min.css') }}">
     {% endblock %}
 </head>
 <body>
+<script src="{{ asset('js/social/facebook.js') }}"></script>
 {% set authenticated = is_granted('IS_AUTHENTICATED_FULLY') %}
 {% include 'navigation.html.twig' %}
 <div class="container justify-content-md-center">

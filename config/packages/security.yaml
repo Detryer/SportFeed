@@ -20,6 +20,7 @@ security:
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login/check-facebook, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -35,8 +36,7 @@ security:
                 target: /
             oauth:
                 resource_owners:
-                    facebook:           "/secured/login_facebook"
-                    google:           "/secured/login_google"
+                    facebook:      "/login/check-facebook"
                 login_path:        fos_user_security_login
                 failure_path:      fos_user_security_login
 
