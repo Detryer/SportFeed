@@ -69,14 +69,15 @@ function testAPI() {
 function facebookLogin() {
   FB.getLoginStatus(function(response) {
     if (response.status === 'connected') {
-      // connected
+      console.log(response.authResponse);
       document.location = '/login/check-facebook';
     } else {
-      // not_authorized
       FB.login(function(response) {
         if (response.authResponse) {
+          console.log('check-facebook2');
           document.location = '/login/check-facebook';
         } else {
+          console.log('Login cancelled');
           alert('Login cancelled.');
         }
       }, {scope: 'email'});

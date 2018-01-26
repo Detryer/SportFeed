@@ -3,7 +3,7 @@
 parameters:
     facebook_client_id: 2076571935898183
     facebook_secret: 8b2be8a7b02fcc4812fb2fdfb7628fe5
-    mailer_user: test@test.ru
+    mailer_user: test@test.com
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -32,3 +32,14 @@ services:
             - '@fos_user.user_manager'
             - { facebook: facebookId, google: googleId }
             - '@doctrine'
+    hiqo_user.registration:
+            class: App\EventListener\RegistrationEventListener
+            arguments:
+                $router: '@router'
+                $entityManager: "@doctrine.orm.entity_manager"
+                $tokenStorage: '@security.token_storage'
+                $session: '@session'
+            tags:
+             - { name: kernel.event_subscriber }
+#            - { name: kernel.event_subscriber, event: fos_user.registration.confirm, method: onRegistrationConfirm }
+#            - { name: kernel.event_subscriber, event: fos_user.registration.success, method: onRegistrationSuccess }

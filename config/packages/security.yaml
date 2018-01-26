@@ -18,7 +18,6 @@ security:
         fos_userbundle:
             id: fos_user.user_provider.username
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login/check-facebook, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     firewalls:
@@ -29,14 +28,15 @@ security:
             anonymous: ~
             provider: chain_provider
             form_login:
-                login_path: login
-                check_path: login
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
+                default_target_path: dashboard
             logout:
                 path: /logout
                 target: /
             oauth:
                 resource_owners:
-                    facebook:      "/login/check-facebook"
+                    facebook:      facebook_login
                 login_path:        fos_user_security_login
                 failure_path:      fos_user_security_login
 

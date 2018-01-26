@@ -9,7 +9,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class FOSUBUserProvider extends BaseClass {
 
   public function connect(UserInterface $user, UserResponseInterface $response) {
-    dump($user);
     $property = $this->getProperty($response);
 
     $username = $response->getUsername();
@@ -35,8 +34,6 @@ class FOSUBUserProvider extends BaseClass {
   }
 
   public function loadUserByOAuthUserResponse(UserResponseInterface $response) {
-    dump($response->getResponse());
-    die();
     $data = $response->getResponse();
     $username = $response->getUsername();
     $email = $response->getEmail() ? $response->getEmail() : $username;
