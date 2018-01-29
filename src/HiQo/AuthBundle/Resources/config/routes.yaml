@@ -1,0 +1,2 @@
+facebook_login:
+    path: /login/check-facebook
