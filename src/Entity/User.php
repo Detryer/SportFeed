@@ -21,11 +21,93 @@ class User extends BaseUser {
    */
   protected $id;
 
+  /**
+   * @var string
+   */
+  protected $username;
+
+  /**
+   * @var string
+   */
+  protected $usernameCanonical;
+
+  /**
+   * @var string
+   */
+  protected $email;
+
+  /**
+   * @var string
+   */
+  protected $emailCanonical;
+
+  /**
+   * @var bool
+   */
+  protected $enabled;
+
+  /**
+   * The salt to use for hashing.
+   *
+   * @var string
+   */
+  protected $salt;
+
+  /**
+   * Encrypted password. Must be persisted.
+   *
+   * @var string
+   */
+  protected $password;
+
+  /**
+   * Plain password. Used for model validation. Must not be persisted.
+   *
+   * @var string
+   */
+  protected $plainPassword;
+
+  /**
+   * @var \DateTime
+   */
+  protected $lastLogin;
+
+  /**
+   * Random string sent to the user email address in order to verify it.
+   *
+   * @var string
+   */
+  protected $confirmationToken;
+
+  /**
+   * @var \DateTime
+   */
+  protected $passwordRequestedAt;
+
+  /**
+   * @var Collection
+   */
+  protected $groups;
+
+  /**
+   * @var array
+   */
+  protected $roles;
+
   /** @ORM\Column(name="facebook_id", type="string", length=255, nullable=true) */
   protected $facebook_id;
 
   /** @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true) */
   protected $facebook_access_token;
+
+  /**
+   * User constructor.
+   */
+  public function __construct()
+  {
+    $this->enabled = false;
+    $this->roles = array();
+  }
 
   public function getFacebookId() {
     return $this->facebook_id;

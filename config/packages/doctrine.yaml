@@ -22,28 +22,6 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
-hwi_oauth:
-    firewall_names: [main]
-    fosub:
-        properties:
-            facebook: facebookId
-            google: googleId
-    resource_owners:
-        facebook:
-            type:                facebook
-            client_id:           2076571935898183
-            client_secret:       8b2be8a7b02fcc4812fb2fdfb7628fe5
-            options:
-                display: popup
-                auth_type: rerequest
-                csrf: true
-fos_user:
-    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
-    firewall_name: main
-    user_class: App\Entity\User
-    from_email:
-        address: "%mailer_user%"
-        sender_name: "%mailer_user%"
 web_profiler:
     toolbar: true
     position: bottom
